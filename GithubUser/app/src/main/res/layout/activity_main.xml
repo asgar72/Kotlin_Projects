@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/img"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:background="@drawable/img">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="50dp">
+        android:layout_marginBottom="50dp"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="match_parent"
@@ -35,25 +35,25 @@
     <SearchView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/desgin"
         android:layout_margin="10dp"
-        android:queryHint="Enter Your Github Username"
-        android:iconifiedByDefault="false"/>
+        android:background="@drawable/desgin"
+        android:iconifiedByDefault="false"
+        android:queryHint="Enter Your Github Username" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/button"
+        android:id="@+id/btnsearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="20dp"
+        android:background="@drawable/desgin"
         android:gravity="center"
-        android:text="Search"
-        android:textStyle="normal"
-        android:textSize="20sp"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:background="@drawable/desgin"
-        android:textAllCaps="false" />
+        android:text="Search"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:textStyle="normal" />
 
 
 </LinearLayout>

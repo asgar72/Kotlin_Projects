@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">GithubUser</string>
+    <string name="user_name">@asgar</string>
+    <string name="about">Android Developer</string>
 </resources>
