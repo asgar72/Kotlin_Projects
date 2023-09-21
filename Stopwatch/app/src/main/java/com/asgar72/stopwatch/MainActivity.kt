@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
     var isRunning = false
     private var minutes: String? = "00.00.00"
+    private var elapsedTimeWhenStopped: Long = 0L
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -33,12 +35,17 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+
         binding.restore.setOnClickListener {
             if (isRunning){
                 binding.chronometer.base= SystemClock.elapsedRealtime()
                 binding.run.text = "RUN"
                 isRunning=false
                 binding.chronometer.stop()
+
+                //clear lap list
+                lapList.clear()
+                arrayAdapter.notifyDataSetChanged()
             }
         }
 
@@ -56,13 +63,14 @@ class MainActivity : AppCompatActivity() {
             }
             dialog.show()
         }
+
         binding.run.setOnClickListener {
             if (!isRunning) {
                 isRunning = false
                 if (!minutes.equals("00.00.00")) {
                     var totalmint = minutes!!.toInt() * 60 * 1000L
                     var countDown = 1000L
-                    binding.chronometer.base = SystemClock.elapsedRealtime() + totalmint
+                    binding.chronometer.base = SystemClock.elapsedRealtime() + totalmint - elapsedTimeWhenStopped
                     binding.chronometer.format = "%S %S"
                     binding.chronometer.onChronometerTickListener =
                         Chronometer.OnChronometerTickListener {
@@ -76,22 +84,19 @@ class MainActivity : AppCompatActivity() {
                         }
                 } else {
                     isRunning = true
-                    binding.chronometer.base = SystemClock.elapsedRealtime()
+                    binding.chronometer.base = SystemClock.elapsedRealtime() - elapsedTimeWhenStopped
                     binding.run.text = "STOP"
                     binding.chronometer.start()
                 }
             } else {
-                binding.chronometer.stop()
-                isRunning = false
-                binding.run.text = "RUN"
+                if (isRunning) {
+                    // Save the elapsed time when stopping
+                    elapsedTimeWhenStopped = SystemClock.elapsedRealtime() - binding.chronometer.base
+                    binding.run.text = "RUN"
+                    isRunning = false
+                    binding.chronometer.stop()
+                }
             }
         }
     }
 }
-
-
-
-
-
-
-
