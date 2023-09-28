@@ -24,18 +24,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        binding.userName.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String?): Boolean {
-                // Handle search query here if needed
-                return true
-            }
-
-            override fun onQueryTextChange(newText: String?): Boolean {
-                // Handle text changes in the SearchView here if needed
-                return true
-            }
-        })
-
         binding.btnsearch.setOnClickListener {
             val query = binding.userName.query.toString()
             // Do something with the query (e.g., perform a search)
@@ -46,5 +34,6 @@ class MainActivity : AppCompatActivity() {
             intent.putExtra("username", query)
             startActivity(intent)
         }
+
     }
 }
