@@ -3,7 +3,15 @@ package com.asgar72.githubuser
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import android.widget.SearchView
+import android.widget.Toast
 import com.asgar72.githubuser.databinding.ActivityMainBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,8 +24,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        binding.userName.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                // Handle search query here if needed
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                // Handle text changes in the SearchView here if needed
+                return true
+            }
+        })
+
         binding.btnsearch.setOnClickListener {
+            val query = binding.userName.query.toString()
+            // Do something with the query (e.g., perform a search)
+            Toast.makeText(this, "$query", Toast.LENGTH_SHORT).show()
+
+            // Start UserData activity
             val intent = Intent(this, UserData::class.java)
+            intent.putExtra("username", query)
             startActivity(intent)
         }
     }

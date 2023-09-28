@@ -48,7 +48,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Asgar Abbas"
+                        android:text="name"
                         android:textColor="#1e90ff"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -59,7 +59,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginTop="10dp"
-                        android:text="@string/user_name"
+                        android:text="UserName"
                         android:textColor="#1e90ff"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -80,7 +80,7 @@
                 android:id="@+id/aboutUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/about"
+                android:text="i don't know"
                 android:textColor="#1e90ff"
                 android:textSize="25sp"
                 android:textStyle="normal" />
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="22"
+                    android:text="00"
                     android:textColor="#ff4757"
                     android:textSize="18dp" />
 
@@ -130,7 +130,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="10"
+                    android:text="0"
                     android:textColor="#ff4757"
                     android:textSize="18dp" />
             </LinearLayout>
@@ -148,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
-                android:text="34"
+                android:text="00"
                 android:textColor="#ff4757"
                 android:textSize="18dp" />
 
