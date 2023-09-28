@@ -39,6 +39,7 @@
         android:layout_margin="10dp"
         android:background="@drawable/desgin"
         android:iconifiedByDefault="false"
+        
         android:queryHint="Enter Your Github Username" />
 
     <androidx.appcompat.widget.AppCompatButton

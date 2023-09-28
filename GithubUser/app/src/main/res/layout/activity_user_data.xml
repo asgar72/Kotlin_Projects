@@ -74,7 +74,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="UserName"
-                            android:textColor="#1e90ff"
+                            android:textColor="#ff4757"
                             android:textSize="20sp"
                             android:textStyle="bold" />
 

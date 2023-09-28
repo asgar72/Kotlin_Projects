@@ -5,6 +5,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.asgar72.githubuser.databinding.ActivityUserDataBinding
 import com.squareup.picasso.Picasso
 import retrofit2.Call
@@ -23,7 +24,7 @@ class UserData : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         supportActionBar?.hide()
-        
+
         val username = intent.getStringExtra("username")
 
         if (username != null) {
@@ -42,7 +43,6 @@ class UserData : AppCompatActivity() {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if (response.isSuccessful) {
                         val user = response.body()
-
                         // Check if user is not null
                         if (user != null) {
                             // Update the UI elements with user data
@@ -53,26 +53,11 @@ class UserData : AppCompatActivity() {
                             binding.txtFollowers.text = user.followers.toString()
                             binding.txtFollowing.text = user.following.toString()
                             binding.txtrepo.text = user.public_repos.toString()
-                            binding.txtLocations.text= user.location
-
-                        } else {
-                            Log.e("UserData Activity", "Response body is null")
-                        }
-                    } else {
-                        // Handle specific HTTP error codes
-                        when (response.code()) {
-                            404 -> {
-                                // User not found, display an error message
-                                Log.e("UserData Activity", "User not found")
-                                // You can show a toast or set an error message in your UI here
-                            }
-                            else -> {
-                                // Handle other HTTP error codes
-                                Log.e("UserData Activity", "HTTP Error: ${response.code()}")
-                            }
+                            binding.txtLocations.text = user.location
                         }
                     }
                 }
+
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     // Handle network errors here
                     Log.e("UserData Activity", "onFailure: ${t.message}")
@@ -80,10 +65,10 @@ class UserData : AppCompatActivity() {
             })
         }
 
-        binding.btnProfiles.setOnClickListener{
+        binding.btnProfiles.setOnClickListener {
             val userId = binding.txtUser.text.toString()
             val url = "https://github.com/$userId"
-            val intent = Intent(Intent.ACTION_VIEW,Uri.parse(url))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(intent)
         }
     }

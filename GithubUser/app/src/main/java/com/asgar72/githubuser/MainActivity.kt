@@ -1,9 +1,11 @@
 package com.asgar72.githubuser
 
+import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import com.asgar72.githubuser.databinding.ActivityMainBinding
@@ -26,14 +28,45 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnsearch.setOnClickListener {
             val query = binding.userName.query.toString()
-            // Do something with the query (e.g., perform a search)
-            Toast.makeText(this, "$query", Toast.LENGTH_SHORT).show()
 
-            // Start UserData activity
-            val intent = Intent(this, UserData::class.java)
-            intent.putExtra("username", query)
-            startActivity(intent)
+            if (query.isNotBlank()) {
+                // Initialize Retrofit
+                val retrofit = Retrofit.Builder()
+                    .baseUrl("https://api.github.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+
+                val gitHubApi = retrofit.create(GitHubApi::class.java)
+
+                // Make API call to get user data
+                val call = gitHubApi.getUser(query)
+
+                call.enqueue(object : Callback<User> {
+                    override fun onResponse(call: Call<User>, response: Response<User>) {
+                        if (response.isSuccessful) {
+                            // User exists, start UserData activity
+                            val intent = Intent(this@MainActivity, UserData::class.java)
+                            intent.putExtra("username", query)
+                            startActivity(intent)
+                        } else {
+                            // User not found, show a message
+                            Toast.makeText(this@MainActivity, "User not found", Toast.LENGTH_SHORT).show()
+                            showCustomDialog()
+                        }
+                    }
+                    override fun onFailure(call: Call<User>, t: Throwable) {
+                        // Handle network errors here
+                        Log.e("MainActivity", "onFailure: ${t.message}")
+                    }
+                })
+            } else {
+                Toast.makeText(this, "Enter UserName", Toast.LENGTH_SHORT).show()
+            }
         }
-
+    }
+    private fun showCustomDialog() {
+        val dialog = Dialog(this)
+        dialog.setContentView(R.layout.nodata)
+        dialog.show()
     }
 }
