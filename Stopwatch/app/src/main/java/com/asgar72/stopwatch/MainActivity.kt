@@ -49,21 +49,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.clock.setOnClickListener {
-            var dialog = Dialog(this)
-            dialog.setContentView(R.layout.dailog)
-            var numberPicker = dialog.findViewById<NumberPicker>(R.id.numberPicker)
-            numberPicker.minValue = 0
-            numberPicker.maxValue = 5
-            dialog.findViewById<Button>(R.id.set_time).setOnClickListener {
-                minutes = numberPicker.value.toString()
-                binding.clockTime.text =
-                    dialog.findViewById<NumberPicker>(R.id.numberPicker).value.toString() + " mins"
-                dialog.dismiss()
-            }
-            dialog.show()
-        }
-
         binding.run.setOnClickListener {
             if (!isRunning) {
                 isRunning = false
