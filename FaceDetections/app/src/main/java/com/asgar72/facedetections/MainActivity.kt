@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
+        //open camera
         binding.btnCamera.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -38,6 +39,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
+    //then receive camera info (about photos)
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -45,13 +48,14 @@ class MainActivity : AppCompatActivity() {
             val extras = data?.extras
             val bitmap = extras?.get("data") as? Bitmap
             if (bitmap != null) {
-                detectFace(bitmap)
+                detectFace(bitmap) //image in bitmap format
             }
         }
     }
 
+
     fun detectFace(bitmap: Bitmap) {
-// High-accuracy landmark detection and face classification
+        // High-accuracy landmark detection and face classification
         val highAccuracyOpts = FaceDetectorOptions.Builder()
             .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
             .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
@@ -61,6 +65,7 @@ class MainActivity : AppCompatActivity() {
         val detector = FaceDetection.getClient(highAccuracyOpts)
         val image = InputImage.fromBitmap(bitmap, 0)
 
+        //images process
         val result = detector.process(image)
             .addOnSuccessListener { faces ->
                 // Task completed successfully, our face is successfully detected.
@@ -76,6 +81,7 @@ class MainActivity : AppCompatActivity() {
                 if(faces.isEmpty()){
                     Toast.makeText(this,"Oops No face detected",Toast.LENGTH_SHORT).show()
                 }
+                // result show in dialog box
                 else{
                     //Toast.makeText(this,resultText,Toast.LENGTH_LONG).show()
                     val builder = AlertDialog.Builder(this)
@@ -97,6 +103,7 @@ class MainActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 // Task failed with an exception, face detection is failed.
+                Toast.makeText(this,"Something Wrong",Toast.LENGTH_SHORT).show()
 
             }
 
