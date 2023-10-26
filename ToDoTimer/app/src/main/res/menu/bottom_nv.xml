@@ -4,7 +4,10 @@
     <item
         android:id="@+id/item1"
         android:title="ToDO"
-        android:icon="@drawable/todo"/>
+        android:icon="@drawable/baseline_home_24"/>
+    <item
+        android:id="@+id/item3"
+        android:title="" />
     <item
         android:id="@+id/item2"
         android:title="StopWatch"

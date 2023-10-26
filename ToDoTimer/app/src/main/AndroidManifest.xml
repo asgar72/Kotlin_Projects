@@ -12,6 +12,11 @@
         android:theme="@style/Theme.ToDoTimer"
         tools:targetApi="31">
         <activity
+            android:name=".ToDo_List"
+            android:exported="false"
+            android:label="@string/title_activity_to_do_list"
+            android:theme="@style/Theme.ToDoTimer.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
