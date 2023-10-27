@@ -22,8 +22,9 @@
 
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:id="@+id/pick_pic"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:src="@drawable/face" />
             <!--text view to display the result text
                         after reading an image-->

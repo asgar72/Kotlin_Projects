@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -18,6 +19,7 @@ import com.google.mlkit.vision.face.FaceDetectorOptions
 
 class MainActivity : AppCompatActivity() {
 
+    //view binding
     private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -27,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
 
-        //open camera
+        // Open camera
         binding.btnCamera.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
 
@@ -39,8 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    //then receive camera info (about photos)
+    // Code for handling the result of the camera activity
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
@@ -48,14 +49,13 @@ class MainActivity : AppCompatActivity() {
             val extras = data?.extras
             val bitmap = extras?.get("data") as? Bitmap
             if (bitmap != null) {
-                detectFace(bitmap) //image in bitmap format
+                detectFace(bitmap)
             }
         }
     }
 
-
+    // Code for face detection using ML Kit.
     fun detectFace(bitmap: Bitmap) {
-        // High-accuracy landmark detection and face classification
         val highAccuracyOpts = FaceDetectorOptions.Builder()
             .setPerformanceMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
             .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
@@ -65,10 +65,8 @@ class MainActivity : AppCompatActivity() {
         val detector = FaceDetection.getClient(highAccuracyOpts)
         val image = InputImage.fromBitmap(bitmap, 0)
 
-        //images process
         val result = detector.process(image)
             .addOnSuccessListener { faces ->
-                // Task completed successfully, our face is successfully detected.
                 var resultText = ""
                 var i = 1
                 for (face in faces) {
@@ -78,17 +76,19 @@ class MainActivity : AppCompatActivity() {
                             "\nRight Eye open : ${face.rightEyeOpenProbability?.times(100)}%"
                     i++
                 }
-                if(faces.isEmpty()){
-                    Toast.makeText(this,"Oops No face detected",Toast.LENGTH_SHORT).show()
-                }
-                // result show in dialog box
-                else{
-                    //Toast.makeText(this,resultText,Toast.LENGTH_LONG).show()
+                if (faces.isEmpty()) {
+                    Toast.makeText(this, "Oops No face detected", Toast.LENGTH_SHORT).show()
+                } else {
                     val builder = AlertDialog.Builder(this)
-                    val dialogView = LayoutInflater.from(this).inflate(R.layout.fragment_resultdialog, null)
+                    val dialogView =
+                        LayoutInflater.from(this).inflate(R.layout.fragment_resultdialog, null)
 
                     val dialogMessage = dialogView.findViewById<TextView>(R.id.result_text_view)
                     val okButton = dialogView.findViewById<Button>(R.id.result_ok_button)
+                    val pickPicImageView = dialogView.findViewById<ImageView>(R.id.pick_pic)
+
+                    // Set the picked photo in the ImageView
+                    pickPicImageView.setImageBitmap(bitmap)
 
                     dialogMessage.text = resultText
 
@@ -102,24 +102,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             .addOnFailureListener { e ->
-                // Task failed with an exception, face detection is failed.
-                Toast.makeText(this,"Something Wrong",Toast.LENGTH_SHORT).show()
-
+                Toast.makeText(this, "Something Wrong", Toast.LENGTH_SHORT).show()
             }
-
-
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
